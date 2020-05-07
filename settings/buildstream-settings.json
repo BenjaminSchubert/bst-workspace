@@ -4,5 +4,6 @@
     "python.linting.pylintEnabled": true,
     "python.linting.pylintArgs": ["--rcfile", "${workspaceFolder}/.pylintrc"],
     "python.formatting.provider": "black",
-    "python.testing.pytestArgs": ["--integration", "${workspaceFolder}/tests"]
+    "python.testing.pytestArgs": ["--integration", "${workspaceFolder}/tests"],
+    "python.testing.pytestEnabled": true
 }
