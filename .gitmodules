@@ -1,0 +1,20 @@
+[submodule "buildstream"]
+	path = buildstream
+	url = https://gitlab.com/BuildStream/buildstream.git
+	branch = master
+[submodule "buildbox-casd"]
+	path = buildbox-casd
+	url = https://gitlab.com/buildgrid/buildbox/buildbox-casd.git
+	branch = master
+[submodule "buildbox-common"]
+	path = buildbox-common
+	url = https://gitlab.com/buildgrid/buildbox/buildbox-common.git
+	branch = master
+[submodule "buildbox-run-bubblewrap"]
+	path = buildbox-run-bubblewrap
+	url = https://gitlab.com/BuildGrid/buildbox/buildbox-run-bubblewrap.git
+	branch = master
+[submodule "buildbox-fuse"]
+	path = buildbox-fuse
+	url = https://gitlab.com/BuildGrid/buildbox/buildbox-fuse.git
+	branch = master
