@@ -25,6 +25,10 @@
 		"timonwong.shellcheck"
 	],
 
+	"containerEnv": {
+		"INTEGRATION_CACHE": "/home/buildstream/integration-cache",
+	},
+
 	"runArgs": ["--privileged"],
 
 	"postCreateCommand": "make -C /workspaces/workspace",
