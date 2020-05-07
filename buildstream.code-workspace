@@ -5,6 +5,9 @@
         },
         {
             "path": "./buildstream"
+        },
+        {
+            "path": "./bst-plugins-experimental"
         }
     ],
 }

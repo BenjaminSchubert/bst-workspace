@@ -38,7 +38,14 @@ RUN \
         # BuildStream plugins
         bzr \
         lzip \
-        patch
+        patch \
+        # bst-plugins-experimental plugins
+        cairo-gobject-devel \
+        git-lfs \
+        gobject-introspection-devel \
+        ostree \
+        quilt
+
 
 ADD buildbox-common /build/buildbox-common
 RUN \

@@ -18,3 +18,7 @@
 	path = buildbox-fuse
 	url = https://gitlab.com/BuildGrid/buildbox/buildbox-fuse.git
 	branch = master
+[submodule "bst-plugins-experimental"]
+	path = bst-plugins-experimental
+	url = https://gitlab.com/BuildStream/bst-plugins-experimental.git
+	branch = master
