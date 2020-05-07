@@ -8,6 +8,7 @@ RUN \
     dnf upgrade --assumeyes && \
     dnf install --setopt=install_weak_deps=False --assumeyes \
         # Misc
+        bash-completion \
         gcc \
         gcc-c++ \
         git \
