@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "bst-plugins-experimental": true,
+        "buildstream/": true
+    }
+}

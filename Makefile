@@ -9,9 +9,10 @@ all: venv settings
 clean:
 	rm -rf $(VENV_DIR)
 
-settings: buildstream-settings bst-plugins-experimental-settings
+settings: buildstream-settings bst-plugins-experimental-settings workspace-settings
 buildstream-settings: $(BUILDSTREAM_DIR)/.vscode/settings.json
 bst-plugins-experimental-settings: $(BST_PLUGINS_EXPERIMENTAL_DIR)/.vscode/settings.json
+workspace-settings: $(WORKSPACE_DIR)/.vscode/settings.json
 venv: $(VENV_DIR)
 
 $(VENV_DIR): $(BUILDSTREAM_DIR)/requirements/*
@@ -33,5 +34,8 @@ $(BST_PLUGINS_EXPERIMENTAL_DIR)/.vscode/settings.json: $(SETTINGS_DIR)/bst-plugi
 	mkdir -p $(BST_PLUGINS_EXPERIMENTAL_DIR)/.vscode
 	cp $(SETTINGS_DIR)/bst-plugins-experimental-settings.json $@
 
+$(WORKSPACE_DIR)/.vscode/settings.json: $(SETTINGS_DIR)/workspace-settings.json
+	mkdir -p $(BUILDSTREAM_DIR)/.vscode
+	cp $(SETTINGS_DIR)/workspace-settings.json $@
 
 .PHONY: all venv settings buildstream-settings bst-plugins-experimental-settings
