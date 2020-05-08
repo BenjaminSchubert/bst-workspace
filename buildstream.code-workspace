@@ -7,6 +7,9 @@
             "path": "./buildstream"
         },
         {
+            "path": "./bst-plugins-container"
+        },
+        {
             "path": "./bst-plugins-experimental"
         }
     ],

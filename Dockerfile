@@ -2,7 +2,9 @@ FROM fedora:latest
 
 RUN \
     useradd buildstream && \
-    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream
+    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
+    groupadd -g 127 docker && \
+    usermod -a -G docker buildstream
 
 RUN \
     dnf upgrade --assumeyes && \
@@ -45,7 +47,9 @@ RUN \
         git-lfs \
         gobject-introspection-devel \
         ostree \
-        quilt
+        quilt \
+        # bst-plugins-container plugins
+        moby-engine
 
 
 ADD buildbox-common /build/buildbox-common

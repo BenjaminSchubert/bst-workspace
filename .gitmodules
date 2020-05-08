@@ -22,3 +22,7 @@
 	path = bst-plugins-experimental
 	url = https://gitlab.com/BuildStream/bst-plugins-experimental.git
 	branch = master
+[submodule "bst-plugins-container"]
+	path = bst-plugins-container
+	url = https://gitlab.com/buildstream/bst-plugins-container.git
+	branch = master
