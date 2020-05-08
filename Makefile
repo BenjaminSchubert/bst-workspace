@@ -23,6 +23,10 @@ $(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
 		black \
 		mypy \
 		cython \
+		rstcheck \
+		sphinx \
+		sphinx-click \
+		sphinx_rtd_theme \
 		-r$(BUILDSTREAM_DIR)/requirements/cov-requirements.in \
 		-r$(BUILDSTREAM_DIR)/requirements/dev-requirements.in
 	$@/bin/pip install -e $(BUILDSTREAM_DIR)
