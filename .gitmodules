@@ -30,3 +30,7 @@
 	path = freedesktop-sdk
 	url = https://gitlab.com/freedesktop-sdk/freedesktop-sdk.git
 	branch = freedesktop-sdk-19.08.5-bst2
+[submodule "buildgrid"]
+	path = buildgrid
+	url = https://gitlab.com/BuildGrid/buildgrid.git
+	branch = master
