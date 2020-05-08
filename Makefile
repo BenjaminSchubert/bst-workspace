@@ -1,6 +1,6 @@
 VENV_DIR = /home/buildstream/.venv
-WORKSPACE_DIR = /workspaces/workspace
-SETTINGS_DIR = /workspaces/workspace/settings
+WORKSPACE_DIR = /workspaces/bst-workspace
+SETTINGS_DIR = $(WORKSPACE_DIR)/settings
 BUILDSTREAM_DIR = $(WORKSPACE_DIR)/buildstream
 BST_PLUGINS_CONTAINER_DIR = $(WORKSPACE_DIR)/bst-plugins-container
 BST_PLUGINS_EXPERIMENTAL_DIR = $(WORKSPACE_DIR)/bst-plugins-experimental
@@ -17,7 +17,7 @@ bst-plugins-experimental-settings: $(BST_PLUGINS_EXPERIMENTAL_DIR)/.vscode/setti
 workspace-settings: $(WORKSPACE_DIR)/.vscode/settings.json
 venv: $(VENV_DIR)
 
-$(VENV_DIR): $(BUILDSTREAM_DIR)/requirements/*
+$(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
 	python3.7 -m venv --prompt bst $@
 	$@/bin/pip install \
 		black \
@@ -42,7 +42,7 @@ $(BST_PLUGINS_CONTAINER_DIR)/.vscode/settings.json: $(SETTINGS_DIR)/bst-plugins-
 	cp $(SETTINGS_DIR)/bst-plugins-container-settings.json $@
 
 $(WORKSPACE_DIR)/.vscode/settings.json: $(SETTINGS_DIR)/workspace-settings.json
-	mkdir -p $(BUILDSTREAM_DIR)/.vscode
+	mkdir -p $(WORKSPACE_DIR)/.vscode
 	cp $(SETTINGS_DIR)/workspace-settings.json $@
 
 .PHONY: all venv settings buildstream-settings bst-plugins-experimental-settings

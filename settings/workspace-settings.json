@@ -2,6 +2,7 @@
     "files.exclude": {
         "bst-plugins-container": true,
         "bst-plugins-experimental": true,
-        "buildstream/": true
+        "buildstream/": true,
+        "freedesktop-sdk": true
     }
 }
