@@ -6,6 +6,9 @@ services:
     command: bash -c "while true; do sleep 3000; done;"
     privileged: true
 
+    environment:
+      INTEGRATION_CACHE: /home/buildstream/integration-cache
+
     volumes:
       - type: bind
         source: ./

@@ -23,10 +23,6 @@
 		"timonwong.shellcheck"
 	],
 
-	"containerEnv": {
-		"INTEGRATION_CACHE": "/home/buildstream/integration-cache",
-	},
-
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
 	],
