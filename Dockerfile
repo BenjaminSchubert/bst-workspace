@@ -86,4 +86,9 @@ RUN \
 RUN usermod -a -G docker buildstream
 
 ADD files/tox /usr/local/bin/tox
-RUN chmod +x /usr/local/bin/tox
+ADD files/builder-entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN \
+    chmod +x /usr/local/bin/tox && \
+    chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
