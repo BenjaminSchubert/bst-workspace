@@ -11,6 +11,9 @@
         },
         {
             "path": "./bst-plugins-experimental"
+        },
+        {
+            "path": "./freedesktop-sdk"
         }
     ],
 }

@@ -26,3 +26,7 @@
 	path = bst-plugins-container
 	url = https://gitlab.com/buildstream/bst-plugins-container.git
 	branch = master
+[submodule "freedesktop-sdk"]
+	path = freedesktop-sdk
+	url = https://gitlab.com/freedesktop-sdk/freedesktop-sdk.git
+	branch = freedesktop-sdk-19.08.5-bst2
