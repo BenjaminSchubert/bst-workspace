@@ -1,5 +1,5 @@
 VENV_DIR = /home/buildstream/.venv
-WORKSPACE_DIR = /workspaces/bst-workspace
+WORKSPACE_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 SETTINGS_DIR = $(WORKSPACE_DIR)/settings
 BUILDSTREAM_DIR = $(WORKSPACE_DIR)/buildstream
 BST_PLUGINS_CONTAINER_DIR = $(WORKSPACE_DIR)/bst-plugins-container

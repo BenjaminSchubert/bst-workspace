@@ -35,7 +35,9 @@
 
 	"runArgs": ["--privileged"],
 
-	"postCreateCommand": "make -C /workspaces/workspace",
+	// We need to hardcode "/workspaces" here as ${containerWorkspaceFolder}
+	// doesn't give us the path to that, but to the .code-workspace file instead
+	"postCreateCommand": "make -C /workspaces/${localWorkspaceFolderBasename}",
 
 	"remoteUser": "buildstream"
 }
