@@ -1,2 +1,19 @@
+# VSCode related stuff
+.devcontainer
+.vscode/
+buildstream.code-workspace
+settings/
+
+# Docker
+.dockerignore
+
+# Git
 .git/
+.gitmodules
+
+# Misc
 buildstream/
+bst-plugins-container/
+bst-plugins-experimental/
+freedesktop-sdk
+Makefile
