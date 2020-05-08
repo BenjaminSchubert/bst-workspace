@@ -2,7 +2,9 @@ FROM fedora:latest
 
 RUN \
     useradd buildstream && \
-    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream
+    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
+    mkdir /home/buildstream/.cache && \
+    chown buildstream: /home/buildstream/.cache
 
 RUN \
     dnf upgrade --assumeyes && \

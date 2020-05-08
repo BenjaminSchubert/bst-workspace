@@ -7,7 +7,7 @@ services:
     privileged: true
 
     environment:
-      INTEGRATION_CACHE: /home/buildstream/integration-cache
+      INTEGRATION_CACHE: /home/buildstream/.cache/bst-integration-cache
 
     volumes:
       - type: bind
@@ -17,6 +17,13 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+      - type: volume
+        source: builder_cache
+        target: /home/buildstream/.cache
 
     devices:
       - /dev/fuse
+
+
+volumes:
+  builder_cache:
