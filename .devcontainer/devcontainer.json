@@ -3,16 +3,14 @@
 {
 	"name": "BuildStream",
 
-	// Sets the run context to one level up instead of the .devcontainer folder.
-	"context": "..",
-
-	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-	"dockerFile": "../Dockerfile",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "builder",
+	"workspaceFolder": "/home/buildstream/workspace",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
-		"python.pythonPath": "/home/buildstream/.venv/bin/python"
+		"python.pythonPath": "/home/buildstream/venv/bin/python"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
@@ -33,11 +31,9 @@
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
 	],
 
-	"runArgs": ["--privileged"],
-
 	// We need to hardcode "/workspaces" here as ${containerWorkspaceFolder}
 	// doesn't give us the path to that, but to the .code-workspace file instead
-	"postCreateCommand": "make -C /workspaces/${localWorkspaceFolderBasename}",
+	"postCreateCommand": "make -C /home/buildstream/workspace",
 
 	"remoteUser": "buildstream"
 }

@@ -2,9 +2,7 @@ FROM fedora:latest
 
 RUN \
     useradd buildstream && \
-    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
-    groupadd -g 127 docker && \
-    usermod -a -G docker buildstream
+    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream
 
 RUN \
     dnf upgrade --assumeyes && \
@@ -84,6 +82,8 @@ RUN \
     make -C build -j $(nproc) && \
     make -C build install && \
     rm -rf /build
+
+RUN usermod -a -G docker buildstream
 
 ADD files/tox /usr/local/bin/tox
 RUN chmod +x /usr/local/bin/tox

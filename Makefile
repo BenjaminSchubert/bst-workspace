@@ -1,4 +1,4 @@
-VENV_DIR = /home/buildstream/.venv
+VENV_DIR = /home/buildstream/venv
 WORKSPACE_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 SETTINGS_DIR = $(WORKSPACE_DIR)/settings
 BUILDSTREAM_DIR = $(WORKSPACE_DIR)/buildstream

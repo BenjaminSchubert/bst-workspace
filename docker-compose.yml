@@ -1,0 +1,19 @@
+version: "3.4"
+
+services:
+  builder:
+    build: .
+    command: bash -c "while true; do sleep 3000; done;"
+    privileged: true
+
+    volumes:
+      - type: bind
+        source: ./
+        target: /home/buildstream/workspace
+        consistency: cached
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
+    devices:
+      - /dev/fuse
