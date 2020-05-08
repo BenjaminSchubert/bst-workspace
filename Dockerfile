@@ -84,3 +84,6 @@ RUN \
     make -C build -j $(nproc) && \
     make -C build install && \
     rm -rf /build
+
+ADD files/tox /usr/local/bin/tox
+RUN chmod +x /usr/local/bin/tox

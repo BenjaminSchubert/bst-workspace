@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+TOX_ROOT_DIR=$(/usr/bin/tox --showconfig | grep toxinidir | head -n 1 | cut -d " " -f 3)
+TOX_BASENAME=$(basename "${TOX_ROOT_DIR}")
+
+exec /usr/bin/tox --workdir "${HOME}/.cache/tox/${TOX_BASENAME}" ${@}
