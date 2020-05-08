@@ -1,13 +1,19 @@
 version: "3.4"
 
 services:
+  # The BuildStream builder, and image to work in
   builder:
-    build: .
+    build:
+      context: .
+      target: builder
     command: bash -c "while true; do sleep 3000; done;"
     privileged: true
 
     environment:
       INTEGRATION_CACHE: /home/buildstream/.cache/bst-integration-cache
+
+    networks:
+      - caches
 
     volumes:
       - type: bind
@@ -24,6 +30,45 @@ services:
     devices:
       - /dev/fuse
 
+  # Cache for sources that the BuildStream client downloads
+  bst-source-cache:
+    build:
+      context: .
+      target: artifact_server
+
+    command: bst-artifact-server --enable-push -p 8000 /home/buildstream/cache
+
+    networks:
+      - caches
+
+    volumes:
+      - type: volume
+        source: source_cache
+        target: /home/buildstream/cache
+
+
+  # Cache for artifacts that the BuildStream client builds
+  bst-artifact-cache:
+    build:
+      context: .
+      target: artifact_server
+
+    command: bst-artifact-server --enable-push -p 8000 /home/buildstream/cache
+
+    networks:
+      - caches
+
+    volumes:
+      - type: volume
+        source: artifact_cache
+        target: /home/buildstream/cache
+
+
+networks:
+  caches:
+
 
 volumes:
+  artifact_cache:
   builder_cache:
+  source_cache:

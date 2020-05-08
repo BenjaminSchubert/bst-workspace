@@ -1,56 +1,24 @@
-FROM fedora:latest
+FROM fedora:latest as base
 
 RUN \
     useradd buildstream && \
-    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
-    mkdir /home/buildstream/.cache && \
-    chown buildstream: /home/buildstream/.cache
-
-RUN \
     dnf upgrade --assumeyes && \
     dnf install --setopt=install_weak_deps=False --assumeyes \
         # Misc
-        bash-completion \
         gcc \
         gcc-c++ \
         git \
-        python3-tox \
-        python3-devel \
-        python36 \
         python37 \
-        python38 \
-        ShellCheck \
-        vim \
-        vim-syntastic-cpp \
-        vim-syntastic-python \
-        vim-syntastic-sh \
-        vim-syntastic-yaml \
+        python3-devel \
+        python3-pip \
         # Buildbox
         cmake \
-        fuse3 \
-        fuse3-devel \
         grpc-devel \
         grpc-plugins \
         libuuid-devel \
         make \
         openssl-devel \
-        protobuf-devel \
-        make \
-        # BuildStream
-        bubblewrap \
-        # BuildStream plugins
-        bzr \
-        lzip \
-        patch \
-        # bst-plugins-experimental plugins
-        cairo-gobject-devel \
-        git-lfs \
-        gobject-introspection-devel \
-        ostree \
-        quilt \
-        # bst-plugins-container plugins
-        moby-engine
-
+        protobuf-devel
 
 ADD buildbox-common /build/buildbox-common
 RUN \
@@ -67,6 +35,57 @@ RUN \
     make -C build -j $(nproc) && \
     make -C build install && \
     rm -rf /build
+
+
+FROM base as artifact_server
+
+ADD buildstream /build/buildstream
+RUN \
+    python3.7 -m pip install /build/buildstream && \
+    rm -rf /build && \
+    mkdir /home/buildstream/cache && \
+    chown buildstream: /home/buildstream/cache
+
+USER buildstream
+
+
+FROM base as builder
+
+RUN \
+    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
+    mkdir /home/buildstream/.cache && \
+    chown buildstream: /home/buildstream/.cache
+
+RUN \
+    dnf install --setopt=install_weak_deps=False --assumeyes \
+        # Misc
+        bash-completion \
+        python3-tox \
+        python36 \
+        python38 \
+        ShellCheck \
+        vim \
+        vim-syntastic-cpp \
+        vim-syntastic-python \
+        vim-syntastic-sh \
+        vim-syntastic-yaml \
+        # Buildbox
+        fuse3 \
+        fuse3-devel \
+        # BuildStream
+        bubblewrap \
+        # BuildStream plugins
+        bzr \
+        lzip \
+        patch \
+        # bst-plugins-experimental plugins
+        cairo-gobject-devel \
+        git-lfs \
+        gobject-introspection-devel \
+        ostree \
+        quilt \
+        # bst-plugins-container plugins
+        moby-engine
 
 ADD buildbox-run-bubblewrap /build/buildbox-run-bubblewrap
 RUN \
@@ -89,6 +108,7 @@ RUN usermod -a -G docker buildstream
 
 ADD files/tox /usr/local/bin/tox
 ADD files/builder-entrypoint.sh /usr/local/bin/entrypoint.sh
+ADD files/buildstream.conf /home/buildstream/.config/buildstream.conf
 RUN \
     chmod +x /usr/local/bin/tox && \
     chmod +x /usr/local/bin/entrypoint.sh
