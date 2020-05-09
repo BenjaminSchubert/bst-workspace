@@ -49,7 +49,7 @@ RUN \
 USER buildstream
 
 
-FROM base as builder
+FROM base as buildbox
 
 RUN \
     echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
@@ -104,6 +104,9 @@ RUN \
     make -C build install && \
     rm -rf /build
 
+
+FROM buildbox as builder
+
 RUN usermod -a -G docker buildstream
 
 ADD files/tox /usr/local/bin/tox
@@ -114,3 +117,27 @@ RUN \
     chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+
+
+FROM fedora:latest as buildgrid
+
+ADD buildgrid /build/buildgrid
+
+RUN dnf install -y python3-pip
+
+RUN python3.7 -m pip install /build/buildgrid
+
+RUN useradd buildgrid
+
+ADD files/buildgrid.conf /home/buildgrid/buildgrid.conf
+
+
+FROM buildbox as buildbox_worker
+
+ADD buildbox-worker /build/buildbox-worker
+RUN \
+    cd /build/buildbox-worker && \
+    cmake . -Bbuild && \
+    make -C build -j $(nproc) && \
+    make -C build install && \
+    rm -rf /build

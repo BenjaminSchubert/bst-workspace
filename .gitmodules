@@ -34,3 +34,6 @@
 	path = buildgrid
 	url = https://gitlab.com/BuildGrid/buildgrid.git
 	branch = master
+[submodule "buildbox-worker"]
+	path = buildbox-worker
+	url = https://gitlab.com/BuildGrid/buildbox/buildbox-worker.git

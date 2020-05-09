@@ -14,6 +14,7 @@ services:
 
     networks:
       - caches
+      - remote-execution
 
     volumes:
       - type: bind
@@ -63,9 +64,37 @@ services:
         source: artifact_cache
         target: /home/buildstream/cache
 
+  # Remote Execution server
+  buildgrid:
+    build:
+      context: .
+      target: buildgrid
+
+    command: bgd server start /home/buildgrid/buildgrid.conf -vvv
+
+    networks:
+      - remote-execution
+
+  buildbox-worker:
+    build:
+      context: .
+      target: buildbox_worker
+
+    privileged: true
+
+#      "sh", "-c", "sleep 15 && ( buildbox-casd --cas-remote=http://controller:50051 /var/lib/buildgrid/cache & buildbox-worker --bots-remote=http://controller:50051 --cas-remote=unix:/var/lib/buildgrid/cache/casd.sock --buildbox-run=buildbox-run-bubblewrap --runner-arg=--use-localcas --platform OSFamily=linux --platform ISA=x86-64 --verbose )"]
+    command: sh -c "buildbox-casd --cas-remote=http://buildgrid:50051 /home/buildgrid/cache & buildbox-worker --bots-remote=http://buildgrid:50051 --cas-remote=unix:/home/buildgrid/cache/casd.sock --runner-arg=--use-localcas --platform OSFamily=linux --platform ISA=x86-64 --verbose"
+
+    depends_on:
+      - buildgrid
+
+    networks:
+      - remote-execution
+
 
 networks:
   caches:
+  remote-execution:
 
 
 volumes:
