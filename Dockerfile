@@ -141,3 +141,11 @@ RUN \
     make -C build -j $(nproc) && \
     make -C build install && \
     rm -rf /build
+
+RUN \
+    dnf install -y supervisor && \
+    useradd buildgrid
+
+ADD files/buildbox-worker-supervisord.conf /home/buildgrid/supervisord.conf
+
+USER buildgrid

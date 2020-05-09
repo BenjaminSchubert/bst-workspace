@@ -82,8 +82,7 @@ services:
 
     privileged: true
 
-#      "sh", "-c", "sleep 15 && ( buildbox-casd --cas-remote=http://controller:50051 /var/lib/buildgrid/cache & buildbox-worker --bots-remote=http://controller:50051 --cas-remote=unix:/var/lib/buildgrid/cache/casd.sock --buildbox-run=buildbox-run-bubblewrap --runner-arg=--use-localcas --platform OSFamily=linux --platform ISA=x86-64 --verbose )"]
-    command: sh -c "buildbox-casd --cas-remote=http://buildgrid:50051 /home/buildgrid/cache & buildbox-worker --bots-remote=http://buildgrid:50051 --cas-remote=unix:/home/buildgrid/cache/casd.sock --runner-arg=--use-localcas --platform OSFamily=linux --platform ISA=x86-64 --verbose"
+    command: supervisord --configuration /home/buildgrid/supervisord.conf
 
     depends_on:
       - buildgrid
