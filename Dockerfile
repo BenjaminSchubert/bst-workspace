@@ -1,6 +1,16 @@
 FROM fedora:latest as base
 
 RUN \
+    dnf upgrade --assumeyes && \
+    dnf install --setopt=install_weak_deps=False --assumeyes \
+        python3-pip
+
+
+
+
+FROM base as buildbox_casd
+
+RUN \
     useradd buildstream && \
     dnf upgrade --assumeyes && \
     dnf install --setopt=install_weak_deps=False --assumeyes \
@@ -8,9 +18,7 @@ RUN \
         gcc \
         gcc-c++ \
         git \
-        python37 \
         python3-devel \
-        python3-pip \
         # Buildbox
         cmake \
         grpc-devel \
@@ -37,7 +45,9 @@ RUN \
     rm -rf /build
 
 
-FROM base as artifact_server
+
+
+FROM buildbox_casd as artifact_server
 
 ADD buildstream /build/buildstream
 RUN \
@@ -49,43 +59,13 @@ RUN \
 USER buildstream
 
 
-FROM base as buildbox
-
-RUN \
-    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
-    mkdir /home/buildstream/.cache && \
-    chown buildstream: /home/buildstream/.cache
+FROM buildbox_casd as buildbox_run
 
 RUN \
     dnf install --setopt=install_weak_deps=False --assumeyes \
-        # Misc
-        bash-completion \
-        python3-tox \
-        python36 \
-        python38 \
-        ShellCheck \
-        vim \
-        vim-syntastic-cpp \
-        vim-syntastic-python \
-        vim-syntastic-sh \
-        vim-syntastic-yaml \
-        # Buildbox
-        fuse3 \
-        fuse3-devel \
-        # BuildStream
         bubblewrap \
-        # BuildStream plugins
-        bzr \
-        lzip \
-        patch \
-        # bst-plugins-experimental plugins
-        cairo-gobject-devel \
-        git-lfs \
-        gobject-introspection-devel \
-        ostree \
-        quilt \
-        # bst-plugins-container plugins
-        moby-engine
+        fuse3 \
+        fuse3-devel
 
 ADD buildbox-run-bubblewrap /build/buildbox-run-bubblewrap
 RUN \
@@ -105,7 +85,58 @@ RUN \
     rm -rf /build
 
 
-FROM buildbox as builder
+FROM buildbox_run as buildbox_worker
+
+ADD buildbox-worker /build/buildbox-worker
+RUN \
+    cd /build/buildbox-worker && \
+    cmake . -Bbuild && \
+    make -C build -j $(nproc) && \
+    make -C build install && \
+    rm -rf /build
+
+RUN \
+    dnf install --setopt=install_weak_deps=False --assumeyes supervisor && \
+    useradd buildbox-worker
+
+ADD files/buildbox-worker-supervisord.conf /home/buildbox-worker/supervisord.conf
+
+USER buildbox-worker
+
+
+
+FROM buildbox_run as builder
+
+RUN \
+    echo "buildstream ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/buildstream && \
+    mkdir /home/buildstream/.cache && \
+    chown buildstream: /home/buildstream/.cache
+
+RUN \
+    dnf install --setopt=install_weak_deps=False --assumeyes \
+        # Misc
+        bash-completion \
+        python3-tox \
+        python36 \
+        python38 \
+        ShellCheck \
+        vim \
+        vim-syntastic-cpp \
+        vim-syntastic-python \
+        vim-syntastic-sh \
+        vim-syntastic-yaml \
+        # BuildStream plugins
+        bzr \
+        lzip \
+        patch \
+        # bst-plugins-experimental plugins
+        cairo-gobject-devel \
+        git-lfs \
+        gobject-introspection-devel \
+        ostree \
+        quilt \
+        # bst-plugins-container plugins
+        moby-engine
 
 RUN usermod -a -G docker buildstream
 
@@ -119,33 +150,13 @@ RUN \
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
 
 
-FROM fedora:latest as buildgrid
+FROM base as buildgrid
 
 ADD buildgrid /build/buildgrid
 
-RUN dnf install -y python3-pip
-
-RUN python3.7 -m pip install /build/buildgrid
-
-RUN useradd buildgrid
-
-ADD files/buildgrid.conf /home/buildgrid/buildgrid.conf
-
-
-FROM buildbox as buildbox_worker
-
-ADD buildbox-worker /build/buildbox-worker
-RUN \
-    cd /build/buildbox-worker && \
-    cmake . -Bbuild && \
-    make -C build -j $(nproc) && \
-    make -C build install && \
-    rm -rf /build
-
-RUN \
-    dnf install -y supervisor && \
+RUN python3.7 -m pip install /build/buildgrid && \
     useradd buildgrid
 
-ADD files/buildbox-worker-supervisord.conf /home/buildgrid/supervisord.conf
+ADD files/buildgrid.conf /home/buildgrid/buildgrid.conf
 
 USER buildgrid
