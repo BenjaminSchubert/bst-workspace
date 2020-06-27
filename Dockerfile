@@ -64,6 +64,7 @@ RUN \
         python36 \
         python38 \
         ShellCheck \
+        time \
         vim \
         vim-syntastic-cpp \
         vim-syntastic-python \
@@ -110,6 +111,7 @@ ADD files/tox /usr/local/bin/tox
 ADD files/builder-entrypoint.sh /usr/local/bin/entrypoint.sh
 ADD files/buildstream.conf /home/buildstream/.config/buildstream.conf
 RUN \
+    chown -R buildstream: /home/buildstream/.config && \
     chmod +x /usr/local/bin/tox && \
     chmod +x /usr/local/bin/entrypoint.sh
 
