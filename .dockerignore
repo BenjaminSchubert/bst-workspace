@@ -1,6 +1,6 @@
 # VSCode related stuff
 .devcontainer
-.vscode/
+**/.vscode/
 buildstream.code-workspace
 settings/
 
@@ -8,7 +8,7 @@ settings/
 .dockerignore
 
 # Git
-.git/
+**/.git/
 .gitmodules
 
 # Misc
@@ -16,3 +16,21 @@ bst-plugins-container/
 bst-plugins-experimental/
 freedesktop-sdk
 Makefile
+
+# Python files
+**/.mypy_cache/
+**/__pycache__/
+**/*.egg-info
+**/*.tox
+**/pip-wheel-metadata
+
+# BuildStream specific
+buildstream/build/
+buildstream/.coverage-reports/
+buildstream/src/**/*.c
+buildstream/src/**/*.h
+buildstream/src/**/*.so
+buildstream/contrib/
+buildstream/doc/
+buildstream/man/
+buildstream/tests/
