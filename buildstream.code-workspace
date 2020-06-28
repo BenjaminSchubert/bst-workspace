@@ -1,19 +1,24 @@
 {
     "folders": [
         {
+            "name": "workspace",
             "path": "."
         },
         {
-            "path": "./buildstream"
+            "name": "buildstream",
+            "path": "buildstream"
         },
         {
-            "path": "./bst-plugins-container"
+            "name": "bst-plugins-container",
+            "path": "bst-plugins-container"
         },
         {
-            "path": "./bst-plugins-experimental"
+            "name": "freedesktop-sdk",
+            "path": "freedesktop-sdk"
         },
         {
-            "path": "./freedesktop-sdk"
+            "name": "bst-plugins-experimental",
+            "path": "bst-plugins-experimental"
         }
     ],
 }
