@@ -1,4 +1,4 @@
-FROM fedora:latest as base
+FROM fedora:31 as base
 
 RUN \
     useradd buildstream && \
