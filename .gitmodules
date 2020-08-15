@@ -29,4 +29,4 @@
 [submodule "freedesktop-sdk"]
 	path = freedesktop-sdk
 	url = https://gitlab.com/freedesktop-sdk/freedesktop-sdk.git
-	branch = freedesktop-sdk-19.08.5-bst2
+	branch = freedesktop-sdk-20.08beta.1-buildstream2
