@@ -1,4 +1,4 @@
-FROM fedora:31 as base
+FROM fedora:latest as base
 
 RUN \
     useradd buildstream && \
@@ -8,7 +8,7 @@ RUN \
         gcc \
         gcc-c++ \
         git \
-        python37 \
+        python38 \
         python3-devel \
         python3-pip \
         # Buildbox
@@ -41,7 +41,7 @@ FROM base as artifact_server
 
 ADD buildstream /build/buildstream
 RUN \
-    python3.7 -m pip install /build/buildstream && \
+    python3.8 -m pip install /build/buildstream && \
     rm -rf /build && \
     mkdir /home/buildstream/cache && \
     chown buildstream: /home/buildstream/cache
@@ -62,7 +62,7 @@ RUN \
         bash-completion \
         python3-tox \
         python36 \
-        python38 \
+        python37 \
         ShellCheck \
         time \
         vim \

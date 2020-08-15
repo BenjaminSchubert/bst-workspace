@@ -18,7 +18,7 @@ workspace-settings: $(WORKSPACE_DIR)/.vscode/settings.json
 venv: $(VENV_DIR)
 
 $(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
-	python3.7 -m venv --prompt bst $@
+	python3.8 -m venv --prompt bst $@
 	$@/bin/pip install \
 		black \
 		mypy \
