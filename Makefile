@@ -32,6 +32,7 @@ $(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
 	$@/bin/pip install -e $(BUILDSTREAM_DIR)
 	$@/bin/pip install -e $(BST_PLUGINS_EXPERIMENTAL_DIR)[ostree,cargo,bazel,deb]
 	$@/bin/pip install -e $(BST_PLUGINS_CONTAINER_DIR)
+	sudo ln -s $(BUILDSTREAM_DIR)/src/buildstream/data/bst /usr/share/bash-completion/completions/bst
 
 $(BUILDSTREAM_DIR)/.vscode/settings.json: $(SETTINGS_DIR)/buildstream-settings.json
 	mkdir -p $(BUILDSTREAM_DIR)/.vscode
