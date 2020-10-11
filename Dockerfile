@@ -63,8 +63,11 @@ RUN \
         python3-tox \
         python36 \
         python37 \
+        python39 \
         ShellCheck \
         time \
+        htop \
+        ncdu \
         vim \
         vim-syntastic-cpp \
         vim-syntastic-python \
