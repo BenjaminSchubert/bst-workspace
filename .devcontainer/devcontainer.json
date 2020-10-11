@@ -19,6 +19,7 @@
 		"lextudio.restructuredtext",
 		"ms-vscode.cpptools",
 		"ms-python.python",
+		"ms-python.vscode-pylance",
 		"oderwat.indent-rainbow",
 		"redhat.vscode-yaml",
 		"timonwong.shellcheck"
