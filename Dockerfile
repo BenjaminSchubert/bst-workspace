@@ -59,9 +59,10 @@ RUN \
     chown buildstream: /home/buildstream/.cache
 
 RUN \
-    dnf install --setopt=install_weak_deps=False --assumeyes \
+    dnf install --setopt=install_weak_deps=False --assumeyes --enablerepo=fedora-debuginfo --enablerepo=updates-debuginfo \
         # Misc
         bash-completion \
+        gdb \
         python3-tox \
         python36 \
         python37 \
@@ -91,7 +92,9 @@ RUN \
         ostree \
         quilt \
         # bst-plugins-container plugins
-        moby-engine
+        moby-engine \
+        # DebugInfos for various packages to be able to debug BuildStream with gdb
+        python3.8-debuginfo
 
 ADD buildbox-run-bubblewrap /build/buildbox-run-bubblewrap
 RUN \
