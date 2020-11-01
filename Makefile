@@ -24,6 +24,7 @@ $(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
 		mypy \
 		cython \
 		rstcheck \
+		snakeviz \
 		sphinx \
 		sphinx-click \
 		sphinx_rtd_theme \
