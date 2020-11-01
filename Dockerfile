@@ -18,7 +18,9 @@ RUN \
         libuuid-devel \
         make \
         openssl-devel \
-        protobuf-devel
+        protobuf-devel \
+    && \
+    python3.8 -m ensurepip
 
 ADD buildbox-common /build/buildbox-common
 RUN \
