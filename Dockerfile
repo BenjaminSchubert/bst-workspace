@@ -13,6 +13,7 @@ RUN \
         python3-pip \
         # Buildbox
         cmake \
+        glog-devel \
         grpc-devel \
         grpc-plugins \
         libuuid-devel \
