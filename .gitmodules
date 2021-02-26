@@ -1,6 +1,6 @@
 [submodule "buildstream"]
 	path = buildstream
-	url = https://gitlab.com/BuildStream/buildstream.git
+	url = https://github.com/apache/buildstream.git
 	branch = master
 [submodule "buildbox-casd"]
 	path = buildbox-casd
