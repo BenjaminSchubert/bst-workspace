@@ -15,6 +15,8 @@ RUN \
         cmake \
         glog-devel \
         grpc-devel \
+        gtest-devel \
+        gmock-devel \
         grpc-plugins \
         libuuid-devel \
         make \

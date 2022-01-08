@@ -28,8 +28,8 @@ $(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
 		sphinx \
 		sphinx-click \
 		sphinx_rtd_theme \
-		-r$(BUILDSTREAM_DIR)/requirements/cov-requirements.in \
-		-r$(BUILDSTREAM_DIR)/requirements/dev-requirements.in
+		-r$(BUILDSTREAM_DIR)/requirements/cov-requirements.txt \
+		-r$(BUILDSTREAM_DIR)/requirements/dev-requirements.txt
 	$@/bin/pip install -e $(BUILDSTREAM_DIR)
 	$@/bin/pip install -e $(BST_PLUGINS_EXPERIMENTAL_DIR)[ostree,cargo,bazel,deb]
 	$@/bin/pip install -e $(BST_PLUGINS_CONTAINER_DIR)
