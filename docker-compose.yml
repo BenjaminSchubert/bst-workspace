@@ -31,37 +31,37 @@ services:
       - /dev/fuse
 
   # Cache for sources that the BuildStream client downloads
-  bst-source-cache:
-    build:
-      context: .
-      target: artifact_server
-
-    command: bst-artifact-server --enable-push -p 8000 /home/buildstream/cache
-
-    networks:
-      - caches
-
-    volumes:
-      - type: volume
-        source: source_cache
-        target: /home/buildstream/cache
-
-
-  # Cache for artifacts that the BuildStream client builds
-  bst-artifact-cache:
-    build:
-      context: .
-      target: artifact_server
-
-    command: bst-artifact-server --enable-push -p 8000 /home/buildstream/cache
-
-    networks:
-      - caches
-
-    volumes:
-      - type: volume
-        source: artifact_cache
-        target: /home/buildstream/cache
+  #  bst-source-cache:
+  #    build:
+  #      context: .
+  #      target: artifact_server
+  #
+  #    command: bst-artifact-server --enable-push -p 8000 /home/buildstream/cache
+  #
+  #    networks:
+  #      - caches
+  #
+  #    volumes:
+  #      - type: volume
+  #        source: source_cache
+  #        target: /home/buildstream/cache
+  #
+  #
+  #  # Cache for artifacts that the BuildStream client builds
+  #  bst-artifact-cache:
+  #    build:
+  #      context: .
+  #      target: artifact_server
+  #
+  #    command: bst-artifact-server --enable-push -p 8000 /home/buildstream/cache
+  #
+  #    networks:
+  #      - caches
+  #
+  #    volumes:
+  #      - type: volume
+  #        source: artifact_cache
+  #        target: /home/buildstream/cache
 
 
 networks:
