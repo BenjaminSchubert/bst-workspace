@@ -1,7 +1,11 @@
 FROM fedora:latest as base
 
+ARG UID=1000
+ARG GID=1000
+
 RUN \
-    useradd buildstream && \
+    groupadd --gid="${GID}" buildstream && \
+    useradd --uid="${UID}" --gid="${GID}" buildstream && \
     dnf upgrade --assumeyes && \
     dnf install --setopt=install_weak_deps=False --assumeyes \
         # Misc

@@ -16,6 +16,7 @@ bst-plugins-container-settings: $(BST_PLUGINS_CONTAINER_DIR)/.vscode/settings.js
 bst-plugins-experimental-settings: $(BST_PLUGINS_EXPERIMENTAL_DIR)/.vscode/settings.json
 workspace-settings: $(WORKSPACE_DIR)/.vscode/settings.json
 venv: $(VENV_DIR)
+test: bst-test
 
 $(VENV_DIR): $(wildcard $(BUILDSTREAM_DIR)/requirements/*)
 	python3.8 -m venv --prompt bst $@
@@ -51,4 +52,9 @@ $(WORKSPACE_DIR)/.vscode/settings.json: $(SETTINGS_DIR)/workspace-settings.json
 	mkdir -p $(WORKSPACE_DIR)/.vscode
 	cp $(SETTINGS_DIR)/workspace-settings.json $@
 
-.PHONY: all venv settings buildstream-settings bst-plugins-experimental-settings
+bst-test:
+	ls -lah /home/buildstream/
+	ls -lah /home/buildstream/.cache
+	cd $(BUILDSTREAM_DIR) && tox -e py38-nocover,py38-nocover-plugins -- -n auto --color=yes --integration
+
+.PHONY: all venv settings buildstream-settings bst-plugins-experimental-settings tests bst-test

@@ -8,6 +8,7 @@ services:
       target: builder
     command: bash -c "while true; do sleep 3000; done;"
     privileged: true
+    user: buildstream
 
     environment:
       INTEGRATION_CACHE: /home/buildstream/.cache/bst-integration-cache
