@@ -1,0 +1,28 @@
+name: PR Checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build the docker images
+        run: docker-compose build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+
+      - name: Unshallow the buildstream repository
+        run: cd buildstream && git fetch --unshallow
+
+      - name: Run BuildStream tests
+        run: docker-compose run --workdir /home/buildstream/workspace builder make test
