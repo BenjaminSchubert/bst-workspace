@@ -11,6 +11,7 @@ services:
 
     environment:
       INTEGRATION_CACHE: /home/buildstream/.cache/bst-integration-cache
+      PYTEST_ADDOPTS: --basetemp /home/buildstream/.cache/pytest-cache
 
     networks:
       - caches

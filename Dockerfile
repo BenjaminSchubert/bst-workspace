@@ -97,7 +97,10 @@ RUN \
         # bst-plugins-container plugins
         moby-engine \
         # DebugInfos for various packages to be able to debug BuildStream with gdb
-        python3.8-debuginfo
+        python3.8-debuginfo \
+    && \
+    # See https://github.com/microsoft/vscode-remote-release/issues/6180
+    rm /etc/profile.d/which2.sh
 
 ADD buildbox-run-bubblewrap /build/buildbox-run-bubblewrap
 RUN \

@@ -21,4 +21,7 @@
             "path": "bst-plugins-experimental"
         }
     ],
+    "settings": {
+        "python.pythonPath": "~/venv/python"
+    },
 }
