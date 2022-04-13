@@ -122,11 +122,7 @@ RUN \
 RUN usermod -a -G docker buildstream
 
 ADD files/tox /usr/local/bin/tox
-ADD files/builder-entrypoint.sh /usr/local/bin/entrypoint.sh
 ADD files/buildstream.conf /home/buildstream/.config/buildstream.conf
 RUN \
     chown -R buildstream: /home/buildstream/.config && \
-    chmod +x /usr/local/bin/tox && \
-    chmod +x /usr/local/bin/entrypoint.sh
-
-ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+    chmod +x /usr/local/bin/tox
